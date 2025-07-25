@@ -20,7 +20,9 @@ public class Bala:MonoBehaviour
             Instantiate(explosion, transform.position, transform.rotation);
 
             if (other.gameObject.layer == 7)
-                other.gameObject.GetComponent<Zombie>().Vida -= daño;
+                //other.gameObject.GetComponent<Zombie>().Vida -= daño;
+                //Esto esta bien?
+                other.gameObject.GetComponent<Vampiro>().Vida -= daño;
 
             Destroy(gameObject);
         }

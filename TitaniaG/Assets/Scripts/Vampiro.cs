@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +5,7 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class Zombie1 : MonoBehaviour
+public class Vampiro : MonoBehaviour
 {
     #region CORE
     public bool instanciado = false;
@@ -14,24 +13,24 @@ public class Zombie1 : MonoBehaviour
     private void Awake()
     {
         ObtenerComponentes();
-        Awake_MainZombie();
-        GameManager.listaZombies.Add(this);
+        Awake_MainVampiro();
+        GameManager.listaVampiros.Add(this);
     }
 
     private void OnEnable()
     {
-        GameManager.zombiesActivos++;
+        GameManager.vampirosActivos++;
         CambiarDeConducta();
     }
 
     private void OnDisable()
     {
-        GameManager.zombiesActivos--;
+        GameManager.vampirosActivos--;
     }
 
     private void OnDestroy()
     {
-        GameManager.listaZombies.Remove(this);
+        GameManager.listaVampiros.Remove(this);
     }
     #endregion
 
@@ -47,10 +46,10 @@ public class Zombie1 : MonoBehaviour
         public const string IDLE = "idle";
         public const string CAMINAR = "caminar";
         public const string CORRER = "correr";
-        public const string ATACAR = "atacar";
-        public const string ATACAR_DIENTES = "atacar_dientes";
-        public const string MORIR = "morir";
-        public const string RECIBIR_DAÑO = "recibir_daño";
+        public const string ATACAR = "Atacar";
+        public const string ATACAR_DIENTES = "Atacar_dientes";
+        public const string MORIR = "Muerte";
+        public const string RECIBIR_DAÑO = "Recibir_daño";
     }
 
     private List<Material> listaMateriales;
@@ -93,6 +92,7 @@ public class Zombie1 : MonoBehaviour
             if (Muerto) return;
 
             if (value < _vida) RecibirDaño();
+            
 
             if (value <= 0)
             {
@@ -197,14 +197,14 @@ public class Zombie1 : MonoBehaviour
 
     #endregion
 
-    #region MAIN ZOMBIE
+    #region MAIN VAMPIRO
 
     private IEnumerator crConducta;
     private IEnumerator crVision;
     private float distanciaJugador = 0;
     private bool pasivo = false;
 
-    private void Awake_MainZombie()
+    private void Awake_MainVampiro()
     {
         CambiarDeConducta();
     }
@@ -319,26 +319,6 @@ public class Zombie1 : MonoBehaviour
 
     private bool _atacando;
 
-    //public bool Atacando
-    //{
-    //    get => _atacando;
-    //    set
-    //    {
-    //        if (Muerto || GameManager.Jugador.Muerto)
-    //            value = false;
-
-    //        _atacando = value;
-
-    //        if (value)
-    //        {
-    //            // Puedes alternar entre ATACAR y ATACAR_DIENTES aquí si quieres
-    //            ChangeAnimationState(AnimStates.ATACAR);
-    //            agent.stoppingDistance = 0;
-    //            agent.SetDestination(transform.position);
-    //        }
-    //    }
-    //}
-
     public bool Atacando
     {
         get => _atacando;
@@ -356,16 +336,17 @@ public class Zombie1 : MonoBehaviour
                 agent.stoppingDistance = 0;
                 agent.SetDestination(transform.position);
 
-                // Determinar tipo de ataque según la distancia al jugador
                 float distancia = Vector3.Distance(transform.position, GameManager.Jugador.transform.position);
 
-                if (distancia < 0.7f)
+              
+
+                if (Random.value < 0.5f)
                 {
-                    ChangeAnimationState(AnimStates.ATACAR_DIENTES);
+                    ChangeAnimationState(AnimStates.ATACAR);
                 }
                 else
                 {
-                    ChangeAnimationState(AnimStates.ATACAR);
+                    ChangeAnimationState(AnimStates.ATACAR_DIENTES);
                 }
             }
         }

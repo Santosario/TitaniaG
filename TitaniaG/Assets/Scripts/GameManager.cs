@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     {
         self = this;
         Awake_Zombies();
+        Awake_Vampiros();
     }
 
     #endregion CORE
@@ -42,6 +43,30 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion ZOMBIES
+
+    #region VAMPIROS
+    public static List<Vampiro> listaVampiros = new List<Vampiro>();
+    public static int vampirosActivos = 0;
+
+    public void Awake_Vampiros()
+    {
+        StartCoroutine(CrRevisarVampiros());
+    }
+
+    public IEnumerator CrRevisarVampiros()
+    {
+    Repetir:
+        foreach (Vampiro vampiro in listaVampiros)
+        {
+            float distancia = Vector3.Distance(Jugador.transform.position, vampiro.transform.position);
+            print(distancia);
+            vampiro.gameObject.SetActive(distancia < distanciaOptimizacion);
+        }
+
+        yield return new WaitForSeconds(1);
+        goto Repetir;
+    }
+    #endregion VAMPIROS
 
     [SerializeField] private Jugador _jugador;
 
