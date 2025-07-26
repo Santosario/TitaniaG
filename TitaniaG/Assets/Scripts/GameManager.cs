@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     #endregion ZOMBIES
 
     #region VAMPIROS
+    public static float distanciaOptimizacionv = 60;
     public static List<Vampiro> listaVampiros = new List<Vampiro>();
     public static int vampirosActivos = 0;
 
@@ -58,11 +59,10 @@ public class GameManager : MonoBehaviour
     Repetir:
         foreach (Vampiro vampiro in listaVampiros)
         {
-            float distancia = Vector3.Distance(Jugador.transform.position, vampiro.transform.position);
-            //print(distancia);
+            float distanciav = Vector3.Distance(Jugador.transform.position, vampiro.transform.position);
+            print(distanciav);
 
-
-            vampiro.gameObject.SetActive(distancia < distanciaOptimizacion);
+            vampiro.gameObject.SetActive(distanciav < distanciaOptimizacionv);
         }
 
         yield return new WaitForSeconds(1);

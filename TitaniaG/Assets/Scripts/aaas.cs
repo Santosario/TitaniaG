@@ -43,7 +43,7 @@ public class aaas : MonoBehaviour
             anim.SetBool("hasGun", true);
             anim.SetBool("hasSword", false);
 
-            StartCoroutine(ShootDelayed(0.5f));
+            StartCoroutine(ShootDelayed(0.1f));
         }
 
         // Temporizador para volver a Idle

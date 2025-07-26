@@ -2,15 +2,15 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class GeneradordeZombies : MonoBehaviour
+public class GeneradorVampiros : MonoBehaviour
 {
     public int tiempoGeneracion = 2;
-    public int limiteZombies = 20;
-    private Zombie pfZombie;
+    public int limiteVampiros = 20;
+    private Vampiro pfVampiro;
 
     private void Awake()
     {
-        pfZombie = Resources.Load<Zombie>("Zombie");
+        pfVampiro = Resources.Load<Vampiro>("Vampiro");
     }
 
     private void OnEnable()
@@ -27,9 +27,9 @@ public class GeneradordeZombies : MonoBehaviour
 
         if (distancia > GameManager.distanciaOptimizacion) goto Reptir;
 
-        if (GameManager.zombiesActivos > limiteZombies) goto Reptir;
+        if (GameManager.vampirosActivos > limiteVampiros) goto Reptir;
 
-        Instantiate(pfZombie, transform.position, transform.rotation);
+        Instantiate(pfVampiro, transform.position, transform.rotation);
 
         goto Reptir;
     }
