@@ -364,7 +364,7 @@ public class Vampiro : MonoBehaviour
         currentAnimationState = newState;
     }
 
-    #endregion
+    #endregion ANIMACIÓN
 
     #region GIZMOS
 

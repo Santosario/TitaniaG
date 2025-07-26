@@ -16859,7 +16859,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1253867270
 Transform:
   m_ObjectHideFlags: 0
@@ -16869,8 +16869,8 @@ Transform:
   m_GameObject: {fileID: 1253867269}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0097, y: 0.0755, z: 0.0523}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.0097, y: 0.0756, z: 0.053}
+  m_LocalScale: {x: 1, y: 1, z: 1.2661}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1516852573}
@@ -23070,27 +23070,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 05225f519f9712f4ea627af57debdda1, type: 3}
       propertyPath: m_LocalScale.x
-      value: 44.34561
+      value: 42.607796
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 05225f519f9712f4ea627af57debdda1, type: 3}
       propertyPath: m_LocalScale.y
-      value: 44.34561
+      value: 42.607796
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 05225f519f9712f4ea627af57debdda1, type: 3}
       propertyPath: m_LocalScale.z
-      value: 44.34561
+      value: 42.607796
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 05225f519f9712f4ea627af57debdda1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.036373
+      value: -0.034915
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 05225f519f9712f4ea627af57debdda1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.478925
+      value: -1.3477
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 05225f519f9712f4ea627af57debdda1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.86
+      value: -1.8046
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 05225f519f9712f4ea627af57debdda1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -24989,10 +24989,10 @@ MonoBehaviour:
   duracionDash: 0.2
   cooldownDash: 1
   bloquearRotacion: 0
-  aDisparoI: {fileID: 7400000, guid: 1c79be49df6cdda41a8c9c0e94203e83, type: 2}
-  aDisparoR: {fileID: 7400000, guid: 1c1048b3acd756e4b979bd316df15c61, type: 2}
-  aDisparoA: {fileID: 7400000, guid: 9c89660b80c356b49a34019b1427f94d, type: 2}
-  aRecarga: {fileID: 7400000, guid: 892452146c7a3724787a3f36c4f95a5f, type: 2}
+  aDisparoI: {fileID: 7400000, guid: 40b70556e062d9c49bea3a1286002feb, type: 2}
+  aDisparoR: {fileID: 7400000, guid: ea662c30c67a9fe45bb811c234bfbeb0, type: 2}
+  aDisparoA: {fileID: 7400000, guid: 6ac1180d95bc78d4fa1ee4e2eff8babd, type: 2}
+  aRecarga: {fileID: 7400000, guid: 6ed80dd554fb91042bd5f7697b9ca284, type: 2}
   ModoDisparo: 0
   rangoEspada: 3
   anguloEspada: 60

@@ -152,19 +152,19 @@ public class Jugador : MonoBehaviour
         cc.Move(mov * Time.deltaTime);
 
         if (enDash)
-{
-    cc.Move(direccionDash * fuerzaDash * Time.deltaTime);
-    tiempoDashRestante -= Time.deltaTime;
-    if (tiempoDashRestante <= 0f)
-    {
-        enDash = false;
-    }
-}
-else
-{
-    if (cooldownDashRestante > 0f)
-        cooldownDashRestante -= Time.deltaTime;
-}
+        {
+            cc.Move(direccionDash * fuerzaDash * Time.deltaTime);
+            tiempoDashRestante -= Time.deltaTime;
+            if (tiempoDashRestante <= 0f)
+            {
+                enDash = false;
+            }
+        }
+        else
+        {
+            if (cooldownDashRestante > 0f)
+                cooldownDashRestante -= Time.deltaTime;
+        }
     }
 
     private void Rotar()
@@ -406,6 +406,7 @@ else
 
     private IEnumerator RealizarAtaqueEspada()
     {
+        animator.SetTrigger("atacar");
         puedeAtacar = false;
 
         // Punto desde donde se evalúa el ataque (ligeramente al frente y elevado)

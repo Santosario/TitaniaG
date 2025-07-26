@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
         foreach (Vampiro vampiro in listaVampiros)
         {
             float distancia = Vector3.Distance(Jugador.transform.position, vampiro.transform.position);
-            print(distancia);
+            //print(distancia);
             vampiro.gameObject.SetActive(distancia < distanciaOptimizacion);
         }
 
