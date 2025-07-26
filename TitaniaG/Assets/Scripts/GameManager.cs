@@ -60,6 +60,8 @@ public class GameManager : MonoBehaviour
         {
             float distancia = Vector3.Distance(Jugador.transform.position, vampiro.transform.position);
             //print(distancia);
+
+
             vampiro.gameObject.SetActive(distancia < distanciaOptimizacion);
         }
 

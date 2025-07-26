@@ -431,11 +431,18 @@ public class Jugador : MonoBehaviour
                     float distancia = Vector3.Distance(transform.position, c.transform.position);
                     if (distancia <= rangoEspada) // Controla el largo del cono
                     {
-                        Zombie z = c.GetComponent<Zombie>();
+
+                        Vampiro z = c.GetComponent<Vampiro>();
                         if (z != null)
                         {
                             z.Vida -= dañoEspada;
                         }
+
+                        //Zombie z = c.GetComponent<Zombie>();
+                        //if (z != null)
+                        //{
+                        //    z.Vida -= dañoEspada;
+                        //}
                     }
                 }
             }
@@ -482,6 +489,10 @@ public class Jugador : MonoBehaviour
         vidaMaxima -= 10;
     }
 
+    private void Trigger_AtaqueVampiro()
+    {
+        vidaMaxima -= 10;
+    }
 
     public int Vida
     {
