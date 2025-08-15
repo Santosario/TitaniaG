@@ -84,14 +84,12 @@ public class Jugador : MonoBehaviour
     public const float Gravedad = -9.81f;
 
     private void Update_Movimiento()
-
     {
         if (corriendo)
         {
             if (tCorrer > 0) tCorrer -= Time.deltaTime;
             else corriendo = false;
         }
-
         else
         {
             if (tCorrer < tCorrerMax) tCorrer += Time.deltaTime / 2;
@@ -102,7 +100,6 @@ public class Jugador : MonoBehaviour
             UI.BarraCorrer.gameObject.SetActive(true);
             UI.RellenoCorrer.fillAmount = tCorrer / tCorrerMax;
         }
-
         else
         {
             UI.BarraCorrer.gameObject.SetActive(false);
@@ -115,30 +112,24 @@ public class Jugador : MonoBehaviour
             cooldownDashRestante = cooldownDash;
             direccionDash = transform.TransformDirection(axis);
         }
-
-
         Rotar();
-
         if (bloquearMovimiento) return;
 
         axis = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-
         axis.Normalize();
-
         if (Input.GetKeyDown(KeyCode.LeftShift) && tCorrer > 0) corriendo = true;
         if (Input.GetKeyUp(KeyCode.LeftShift)) corriendo = false;
-
         float vel = corriendo ? velocidadCorrer : velocidad;
-
-
-        animator.SetFloat("x", axis.x);
-        animator.SetFloat("y", axis.z);
-        animator.SetFloat("velocidad", vel);
-
-
         Vector3 movXZ = transform.TransformDirection(axis) * vel;
         mov.x = movXZ.x;
         mov.z = movXZ.z;
+
+    
+        float magnitudMov = new Vector3(mov.x, 0, mov.z).magnitude;
+        animator.SetFloat("velocidad", magnitudMov);  
+
+        animator.SetFloat("x", axis.x);
+        animator.SetFloat("y", axis.z);
 
         if (cc.isGrounded)
         {
@@ -148,7 +139,6 @@ public class Jugador : MonoBehaviour
         {
             mov.y += Gravedad * Time.deltaTime;
         }
-
         cc.Move(mov * Time.deltaTime);
 
         if (enDash)
