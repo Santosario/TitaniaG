@@ -47212,6 +47212,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vampiro
       objectReference: {fileID: 0}
+    - target: {fileID: 2611301874605380773, guid: 5600a8a147370d042aba75d01ef1961e, type: 3}
+      propertyPath: permitirAtaqueDientes
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4173153744932942430, guid: 5600a8a147370d042aba75d01ef1961e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -47308,6 +47312,11 @@ MonoBehaviour:
   instanciado: 0
   canvas: {fileID: 2413814290044134641}
   barraVida: {fileID: 689597426870986419}
+  vidaBase: 40
+  duplicarVida: 1
+  radioAtaque: 1.2
+  permitirAtaqueDientes: 1
+  tiempoDeRecargaAtaque: 1.2
 --- !u!4 &6340157466178877773
 Transform:
   m_ObjectHideFlags: 0
