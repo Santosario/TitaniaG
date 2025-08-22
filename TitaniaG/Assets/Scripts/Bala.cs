@@ -20,12 +20,19 @@ public class Bala:MonoBehaviour
             Instantiate(explosion, transform.position, transform.rotation);
 
             if (other.gameObject.layer == 7)
-                //other.gameObject.GetComponent<Zombie>().Vida -= daño;
-                //Esto esta bien?
-                other.gameObject.GetComponent<Vampiro>().Vida -= daño;
+            {
+                // Daño a vampiro si existe
+                Vampiro vampiro = other.gameObject.GetComponent<Vampiro>();
+                if (vampiro != null)
+                    vampiro.Vida -= daño;
+
+                // Daño a generador si existe
+                GeneradorVampiros generador = other.gameObject.GetComponent<GeneradorVampiros>();
+                if (generador != null)
+                    generador.Vida -= daño;
+            }
 
             Destroy(gameObject);
         }
-        
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -53,9 +54,8 @@ public class Jugador : MonoBehaviour
     #region MOVIMIENTO
     [Header("Movimiento")]
     [SerializeField] private float velocidad = 5;
-    [SerializeField] private float velocidadCorrer = 10;
 
-    [Header("RotaciÛn con Mouse")]
+    [Header("Rotaci√≥n con Mouse")]
     [SerializeField] private Transform objetivoCamara; // El GameObject que la Cinemachine sigue (CinemachineCameraTarget)
     [SerializeField] private float sensibilidadMouse = 2f;
 
@@ -76,34 +76,12 @@ public class Jugador : MonoBehaviour
 
     private bool bloquearMovimiento = false;
     public bool bloquearRotacion = false;
-    private bool corriendo = false;
-    private float tCorrerMax = 3;
-    private float tCorrer = 3;
 
 
     public const float Gravedad = -9.81f;
 
     private void Update_Movimiento()
     {
-        if (corriendo)
-        {
-            if (tCorrer > 0) tCorrer -= Time.deltaTime;
-            else corriendo = false;
-        }
-        else
-        {
-            if (tCorrer < tCorrerMax) tCorrer += Time.deltaTime / 2;
-        }
-
-        if (tCorrer < tCorrerMax)
-        {
-            UI.BarraCorrer.gameObject.SetActive(true);
-            UI.RellenoCorrer.fillAmount = tCorrer / tCorrerMax;
-        }
-        else
-        {
-            UI.BarraCorrer.gameObject.SetActive(false);
-        }
 
         if (!enDash && Input.GetKeyDown(KeyCode.Space) && cooldownDashRestante <= 0f && axis != Vector3.zero)
         {
@@ -113,13 +91,11 @@ public class Jugador : MonoBehaviour
             direccionDash = transform.TransformDirection(axis);
         }
         Rotar();
-        if (bloquearMovimiento) return;
+
 
         axis = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         axis.Normalize();
-        if (Input.GetKeyDown(KeyCode.LeftShift) && tCorrer > 0) corriendo = true;
-        if (Input.GetKeyUp(KeyCode.LeftShift)) corriendo = false;
-        float vel = corriendo ? velocidadCorrer : velocidad;
+        float vel = velocidad;
         Vector3 movXZ = transform.TransformDirection(axis) * vel;
         mov.x = movXZ.x;
         mov.z = movXZ.z;
@@ -167,7 +143,7 @@ public class Jugador : MonoBehaviour
         // Rotar el jugador (horizontal)
         transform.Rotate(Vector3.up * mouseX);
 
-        // Ya no rotamos verticalmente la c·mara
+        // Ya no rotamos verticalmente la c√°mara
         rotacionVertical = 0f;
         objetivoCamara.localRotation = Quaternion.identity;
 
@@ -207,14 +183,13 @@ public class Jugador : MonoBehaviour
     {
         animator.SetBool(name: "disparoAutomatico", value: false);
         disparando = false;
-        bloquearMovimiento = false;
     }
 
     private void Disparar()
     {
         if (!PuedeDisparar) return;
 
-        bloquearMovimiento = true;
+
 
         disparando = true;
 
@@ -227,7 +202,7 @@ public class Jugador : MonoBehaviour
 
             case ModoDisparo.Rafaga:
                 animator.SetTrigger(name: "disparoRafaga");
-                Invoke(methodName: "TimerAnimacionDisparo", aDisparoR.length);
+                Invoke(methodName: "TimerAnimacionDisparo", 0.8f);
                 break;
 
             case ModoDisparo.Automatico:
@@ -240,7 +215,6 @@ public class Jugador : MonoBehaviour
     public void TimerAnimacionDisparo()
     {
         disparando = false;
-        bloquearMovimiento = false;
     }
 
     private void CambiarModoDisparo()
@@ -271,7 +245,6 @@ public class Jugador : MonoBehaviour
         if (recargando) return;
         if (Municion <= 0) return;
         recargando = true;
-        bloquearMovimiento = true;
         animator.SetTrigger(name: "recargar");
         Invoke(methodName: "TerminarRecarga", aRecarga.length);
     }
@@ -279,11 +252,10 @@ public class Jugador : MonoBehaviour
     private void TerminarRecarga()
     {
         recargando = false;
-        bloquearMovimiento = false;
-        if (Municion >= tamaÒoCargador)
+        if (Municion >= tama√±oCargador)
         {
-            Municion -= tamaÒoCargador;
-            BalasCargador = tamaÒoCargador;
+            Municion -= tama√±oCargador;
+            BalasCargador = tama√±oCargador;
         }
 
         else
@@ -297,7 +269,7 @@ public class Jugador : MonoBehaviour
 
     #region DISPARO Municion
 
-    private int tamaÒoCargador = 25;
+    private int tama√±oCargador = 25;
     private int _balasCargador = 25;
     private int _municion = 80;
     private int municionMax = 500;
@@ -373,8 +345,8 @@ public class Jugador : MonoBehaviour
 
     [Header("Ataque cuerpo a cuerpo")]
     [SerializeField] private float rangoEspada = 2f;
-    [SerializeField] private float anguloEspada = 90f; // SemicÌrculo frontal
-    [SerializeField] private int daÒoEspada = 15;
+    [SerializeField] private float anguloEspada = 90f; // Semic√≠rculo frontal
+    [SerializeField] private int da√±oEspada = 15;
     [SerializeField] private float tiempoEntreAtaques = 0.6f;
 
     private bool puedeAtacar = true;
@@ -399,7 +371,7 @@ public class Jugador : MonoBehaviour
         animator.SetTrigger("atacar");
         puedeAtacar = false;
 
-        // Punto desde donde se eval˙a el ataque (ligeramente al frente y elevado)
+        // Punto desde donde se eval√∫a el ataque (ligeramente al frente y elevado)
         Vector3 origen = transform.position + Vector3.up * 1.0f + transform.forward * 0.5f;
 
         // Obtenemos todos los colliders en un radio amplio
@@ -412,26 +384,32 @@ public class Jugador : MonoBehaviour
             {
                 Vector3 direccionAlObjetivo = (c.transform.position - transform.position).normalized;
 
-                // C·lculo del ·ngulo entre el frente del jugador y el objetivo
+                // C√°lculo del √°ngulo entre el frente del jugador y el objetivo
                 float angulo = Vector3.Angle(transform.forward, direccionAlObjetivo);
 
-                // Un cono m·s angosto en la base pero m·s largo (como una pir·mide)
+                // Un cono m√°s angosto en la base pero m√°s largo (como una pir√°mide)
                 if (angulo < anguloEspada / 2f)
                 {
                     float distancia = Vector3.Distance(transform.position, c.transform.position);
                     if (distancia <= rangoEspada) // Controla el largo del cono
                     {
 
-                        Vampiro z = c.GetComponent<Vampiro>();
-                        if (z != null)
+                        Vampiro vamp = c.GetComponent<Vampiro>();
+                        if (vamp != null)
                         {
-                            z.Vida -= daÒoEspada;
+                            vamp.Vida -= da√±oEspada;
+                        }
+
+                        GeneradorVampiros generador = c.GetComponentInParent<GeneradorVampiros>();
+                        if (generador != null)
+                        {
+                            generador.Vida -= da√±oEspada;
                         }
 
                         //Zombie z = c.GetComponent<Zombie>();
                         //if (z != null)
                         //{
-                        //    z.Vida -= daÒoEspada;
+                        //    z.Vida -= da√±oEspada;
                         //}
                     }
                 }
@@ -448,7 +426,7 @@ public class Jugador : MonoBehaviour
         Vector3 origen = transform.position + Vector3.up * 1.0f + transform.forward * 0.5f;
         Gizmos.DrawWireSphere(origen, rangoEspada);
 
-        // Dibuja lÌneas para mostrar el ·ngulo
+        // Dibuja l√≠neas para mostrar el √°ngulo
         Vector3 dirIzquierda = Quaternion.Euler(0, -anguloEspada / 2f, 0) * transform.forward;
         Vector3 dirDerecha = Quaternion.Euler(0, anguloEspada / 2f, 0) * transform.forward;
 
@@ -476,12 +454,12 @@ public class Jugador : MonoBehaviour
 
     private void Trigger_AtaqueZombie()
     {
-        vidaMaxima -= 10;
+        _vida -= 10;
     }
 
-    private void Trigger_AtaqueVampiro()
+    public void Trigger_AtaqueVampiro()
     {
-        vidaMaxima -= 10;
+        _vida -= 10;
     }
 
     public int Vida
@@ -511,7 +489,7 @@ public class Jugador : MonoBehaviour
         }
     }
 
-    private void Morir()
+    public void Morir()
     {
         Muerto = true;
         cc.enabled = false;
@@ -521,7 +499,9 @@ public class Jugador : MonoBehaviour
 
         canvas.gameObject.SetActive(false);
 
-        Invoke(methodName: "Revivir", time: 3);
+        Invoke(nameof(CargarGameOver), 2f);
+
+        //Invoke(methodName: "Revivir", time: 3);
     }
 
     private void Revivir()
@@ -536,6 +516,11 @@ public class Jugador : MonoBehaviour
 
 
         Vida = vidaMaxima;
+    }
+
+    private void CargarGameOver()
+    {
+        SceneManager.LoadScene("GameOver");
     }
 
 }
