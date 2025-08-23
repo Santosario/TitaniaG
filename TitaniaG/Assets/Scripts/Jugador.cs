@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 
 
@@ -95,12 +96,24 @@ public class Jugador : MonoBehaviour
 
         axis = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         axis.Normalize();
-        float vel = velocidad;
-        Vector3 movXZ = transform.TransformDirection(axis) * vel;
-        mov.x = movXZ.x;
-        mov.z = movXZ.z;
 
-    
+        Vector3 camForward = objetivoCamara.forward;
+        Vector3 camRight = objetivoCamara.right;
+
+        // Eliminamos componente Y para evitar inclinaciones raras
+        camForward.y = 0;
+        camRight.y = 0;
+        camForward.Normalize();
+        camRight.Normalize();
+
+        // Dirección en base a cámara
+        Vector3 moveDir = (camForward * axis.z + camRight * axis.x).normalized;
+
+        float vel = velocidad;
+        mov.x = moveDir.x * vel;
+        mov.z = moveDir.z * vel;
+
+
         float magnitudMov = new Vector3(mov.x, 0, mov.z).magnitude;
         animator.SetFloat("velocidad", magnitudMov);  
 
