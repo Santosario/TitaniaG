@@ -47698,7 +47698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 635283e35b57e8a48b61771dceaf0ee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tiempoRestante: 300
+  tiempoRestante: 180
   pfGenerador: {fileID: 4228637044475151259, guid: 9511634261e5e874b943bb6f07f21906, type: 3}
   puntosGeneracion:
   - {fileID: 1566665509}
