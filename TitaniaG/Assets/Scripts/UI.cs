@@ -53,7 +53,7 @@ public class UI : MonoBehaviour
     private void Update()
     {
         int generadoresVivos = GameManager.listaGeneradoresVampiros.Count;
-        txtGeneradores.text = $"Generadores {generadoresVivos}";
+        txtGeneradores.text = $"Tumbas restantes: {generadoresVivos}";
     }
 
     [Header("Tiempo")]

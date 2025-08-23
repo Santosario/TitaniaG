@@ -271,7 +271,7 @@ public class Jugador : MonoBehaviour
 
     private int tamañoCargador = 25;
     private int _balasCargador = 25;
-    private int _municion = 80;
+    private int _municion = 500;
     private int municionMax = 500;
 
     public bool MunicionCompleta => Municion >= municionMax;

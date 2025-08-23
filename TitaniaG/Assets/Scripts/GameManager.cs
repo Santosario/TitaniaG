@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
         InicializarGeneradores();
     }
 
-    [SerializeField] private float tiempoRestante = 20f; // 5 minutos
+    [SerializeField] private float tiempoRestante = 300; // 5 minutos
 
     private void Update()
     {
